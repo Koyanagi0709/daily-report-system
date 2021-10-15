@@ -225,19 +225,6 @@ document.querySelector('#calendar').innerHTML = calendarHtml
 
 <!-- <input type = "button" class = "botan" value = "出勤" onclick = "btn1Click();"/> -->
 <!-- <input type = "button" class = "botan2" value = "退勤" onclick = "btn2Click();"/> -->
-
-<!--        <table id="report_list"> -->
-<!--        <tbody> -->
-<!--              <tr> -->
-<!--                      <th class="">出勤時刻</th> -->
-<!--                      <th class="">退勤時刻</th> -->
-<!--              </tr> -->
-<!--           <tr> -->
-<!--           <td id ="konnitiwa"> -->
-<!--           <td id ="konnitiwa2"> -->
-<!--          </tr> -->
-<!--        </tbody> -->
-<!--        </table> -->
         <div id = kintai2>
         <h1 class = "kintai">勤怠管理</h1>
         <form method="POST" action="/daily_report_system/InquiryServlet">
@@ -249,11 +236,6 @@ document.querySelector('#calendar').innerHTML = calendarHtml
         <label for="content" class = "kintai4"><input type="radio" name="content" value = "出勤" />出勤</label>
         <label for="content" class = "kintai4"><input type="radio" name="content" value = "退勤"  />退勤</label>
             <br /><br />
-
-<!--             <label for="content">お問い合わせ内容</label><br /> -->
-<!--             <textarea rows="5" cols="25" name="content"></textarea> -->
-<!--             <br /><br /> -->
-
             <button type="submit" class = "botan">送信</button>
         </form>
         </div>
@@ -284,28 +266,6 @@ document.querySelector('#calendar').innerHTML = calendarHtml
                 </table>
             </c:otherwise>
         </c:choose>
-<!-- <table> -->
-<!--                     <tbody> -->
-<!--                         <tr> -->
-<!--                             <th>タイトル</th> -->
-<%--                             <td><c:out value="${message.title}" /></td> --%>
-<!--                         </tr> -->
-<!--                         <tr> -->
-<!--                             <th>メッセージ</th> -->
-<%--                             <td><c:out value="${message.content}" /></td> --%>
-<!--                         </tr> -->
-<!--                         <tr> -->
-<!--                             <th>作成日時</th> -->
-<%--                             <td><fmt:formatDate value="${message.created_at}" pattern="yyyy-MM-dd HH:mm:ss" /></td> --%>
-<!--                         </tr> -->
-<!--                         <tr> -->
-<!--                             <th>更新日時</th> -->
-<%--                             <td><fmt:formatDate value="${message.updated_at}" pattern="yyyy-MM-dd HH:mm:ss" /></td> --%>
-<!--                         </tr> -->
-<!--                     </tbody> -->
-<!--                 </table> -->
-
-
 
          <h3>【自分の日報　一覧】</h3>
          <table id="report_list">
@@ -314,6 +274,7 @@ document.querySelector('#calendar').innerHTML = calendarHtml
                      <th class="report_name">氏名</th>
                      <th class="report_date">日付</th>
                      <th class="report_title">タイトル</th>
+                     <th class="report_action">操作</th>
                  </tr>
                  <c:forEach var="report" items="${reports}" varStatus="status">
                      <fmt:parseDate value="${report.reportDate}" pattern="yyyy-MM-dd" var="reportDay" type="date" />
@@ -321,48 +282,49 @@ document.querySelector('#calendar').innerHTML = calendarHtml
                          <td class="report_name"><c:out value="${report.employee.name}" /></td>
                          <td class="report_date"><fmt:formatDate value='${reportDay}' pattern='yyyy-MM-dd' /></td>
                          <td class="report_title">${report.title}</td>
-<%--                         <td class="report_action"><a href="<c:url value='?action=${actRep}&command=${commShow}&id=${report.id}' />">詳細を見る</a></td> --%>
+                         <td class="report_action"><a href="<c:url value='?action=${actRep}&command=${commShow}&id=${report.id}' />">詳細を見る</a></td>
                      </tr>
                  </c:forEach>
              </tbody>
          </table>
 
+           <div id="pagination">
+            （全 ${reports_count} 件）<br />
+            <c:forEach var="i" begin="1" end="${((reports_count - 1) / maxRow) + 1}" step="1">
+                <c:choose>
+                    <c:when test="${i == page}">
+                        <c:out value="${i}" />&nbsp;
+                    </c:when>
+                    <c:otherwise>
+                        <a href="<c:url value='?action=${actRep}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp;
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </div>
+        <p><a href="<c:url value='?action=${actRep}&command=${commNew}' />">新規日報の登録</a></p>
+
+<!--           <h2>メッセージ一覧</h2> -->
+<!--          <ul> -->
+<%--              <c:forEach var="message" items="${messages}"> --%>
+<!--                  <li> -->
+<%--                          <c:out value="${message.id}" /> --%>
+<%--                      ：<c:out value="${message.title}"></c:out> &gt; <c:out value="${message.content}" /> --%>
+<!--                  </li> -->
+<%--              </c:forEach> --%>
+<!--          </ul> -->
 <!--          <div id="pagination"> -->
-<%--              （全 ${reports_count} 件）<br /> --%>
-<%--              <c:forEach var="i" begin="1" end="${((reports_count - 1) / maxRow) + 1}" step="1"> --%>
+<%--              （全 ${messages_count} 件）<br /> --%>
+<%--              <c:forEach var="i" begin="1" end="${((messages_count - 1) / 15) + 1}" step="1"> --%>
 <%--                  <c:choose> --%>
 <%--                      <c:when test="${i == page}"> --%>
 <%--                          <c:out value="${i}" />&nbsp; --%>
 <%--                      </c:when> --%>
-<%--                     <c:otherwise> --%>
-<%--                         <a href="<c:url value='?action=${actTop}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp; --%>
-<%--                     </c:otherwise> --%>
+<%--                      <c:otherwise> --%>
+<%--                          <a href="<c:url value='?action=${actTop}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp; --%>
+<%--                       </c:otherwise> --%>
 <%--                  </c:choose> --%>
 <%--              </c:forEach> --%>
 <!--          </div> -->
-
-<!--          <h2>メッセージ一覧</h2> -->
-<!--         <ul> -->
-<%--             <c:forEach var="message" items="${messages}"> --%>
-<!--                 <li> -->
-<%--                         <c:out value="${message.id}" /> --%>
-<%--                     ：<c:out value="${message.title}"></c:out> &gt; <c:out value="${message.content}" /> --%>
-<!--                 </li> -->
-<%--             </c:forEach> --%>
-<!--         </ul> -->
-<!--         <div id="pagination"> -->
-<%--             （全 ${messages_count} 件）<br /> --%>
-<%--             <c:forEach var="i" begin="1" end="${((messages_count - 1) / 15) + 1}" step="1"> --%>
-<%--                 <c:choose> --%>
-<%--                     <c:when test="${i == page}"> --%>
-<%--                         <c:out value="${i}" />&nbsp; --%>
-<%--                     </c:when> --%>
-<%--                     <c:otherwise> --%>
-<%-- -                         <a href="<c:url value='?action=${actTop}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp; --%>
-<%-- -                     </c:otherwise> --%>
-<%--                 </c:choose> --%>
-<%--             </c:forEach> --%>
-<!--         </div> -->
-<%--         <p><a href="<c:url value='?action=${actRep}&command=${commNew}' />">新規日報の登録</a></p> --%>
-    </c:param>
+<%--          <p><a href="<c:url value='?action=${actRep}&command=${commNew}' />">新規日報の登録</a></p> --%>
+     </c:param>
 </c:import>
