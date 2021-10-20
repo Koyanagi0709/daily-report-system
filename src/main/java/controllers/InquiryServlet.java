@@ -122,8 +122,7 @@ public class InquiryServlet extends HttpServlet {
 
 
         // ビューとなるJSPを指定して表示する
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/topPage/index.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/topPage/time.jsp");
         rd.forward(request, response);
     }
-
 }

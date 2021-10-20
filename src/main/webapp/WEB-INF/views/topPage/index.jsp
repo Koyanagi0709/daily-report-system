@@ -85,7 +85,6 @@
         background-color : #005 ;
         color : #FFF;
         margin-bottom : 30px;
-        float : left ;
         }
         .botan2{
         width : 100px ;
@@ -142,7 +141,6 @@
         #calendar{
         width : 35% ;
         }
-
         </style>
 
 <script>
@@ -240,32 +238,11 @@ document.querySelector('#calendar').innerHTML = calendarHtml
         </form>
         </div>
 
-        <c:choose>
-            <c:when test="${errors != null}">
-                <h1>入力内容にエラーがあります</h1>
-                <ul>
-                    <c:forEach var="error" items="${errors}">
-                        <li><c:out value="${error}" /></li>
-                    </c:forEach>
-                </ul>
-            </c:when>
-            <c:otherwise>
-                <table border="1" class = "table">
-                    <tbody>
-                        <tr>
-                            <th class = "th">氏名</th>
-                            <th class = "th">出退勤</th>
-                            <th class = "th">時刻</th>
-                        </tr>
-                        <tr>
-                            <td class = "td"><c:out value="${title}" /></td>
-                            <td class = "td"><c:out value="${content}" /></td>
-                            <td class = "td"><c:out value="${timeStr}" /></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </c:otherwise>
-        </c:choose>
+        <div>
+        <form method="GET" action="/daily_report_system/InquiryServlet2">
+        <button type="submit" class = "botan">出勤者一覧</button>
+        </form>
+        </div>
 
          <h3>【自分の日報　一覧】</h3>
          <table id="report_list">
@@ -288,43 +265,20 @@ document.querySelector('#calendar').innerHTML = calendarHtml
              </tbody>
          </table>
 
-           <div id="pagination">
-            （全 ${reports_count} 件）<br />
-            <c:forEach var="i" begin="1" end="${((reports_count - 1) / maxRow) + 1}" step="1">
-                <c:choose>
-                    <c:when test="${i == page}">
-                        <c:out value="${i}" />&nbsp;
-                    </c:when>
-                    <c:otherwise>
-                        <a href="<c:url value='?action=${actRep}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp;
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-        </div>
-        <p><a href="<c:url value='?action=${actRep}&command=${commNew}' />">新規日報の登録</a></p>
-
-<!--           <h2>メッセージ一覧</h2> -->
-<!--          <ul> -->
-<%--              <c:forEach var="message" items="${messages}"> --%>
-<!--                  <li> -->
-<%--                          <c:out value="${message.id}" /> --%>
-<%--                      ：<c:out value="${message.title}"></c:out> &gt; <c:out value="${message.content}" /> --%>
-<!--                  </li> -->
-<%--              </c:forEach> --%>
-<!--          </ul> -->
-<!--          <div id="pagination"> -->
-<%--              （全 ${messages_count} 件）<br /> --%>
-<%--              <c:forEach var="i" begin="1" end="${((messages_count - 1) / 15) + 1}" step="1"> --%>
+<!--            <div id="pagination"> -->
+<%--              （全 ${reports_count} 件）<br /> --%>
+<%--              <c:forEach var="i" begin="1" end="${((reports_count - 1) / maxRow) + 1}" step="1"> --%>
 <%--                  <c:choose> --%>
-<%--                      <c:when test="${i == page}"> --%>
+<%--                     <c:when test="${i == page}"> --%>
 <%--                          <c:out value="${i}" />&nbsp; --%>
 <%--                      </c:when> --%>
-<%--                      <c:otherwise> --%>
-<%--                          <a href="<c:url value='?action=${actTop}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp; --%>
+<%--                       <c:otherwise> --%>
+<%--                           <a href="<c:url value='?action=${actRep}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp; --%>
 <%--                       </c:otherwise> --%>
 <%--                  </c:choose> --%>
 <%--              </c:forEach> --%>
 <!--          </div> -->
-<%--          <p><a href="<c:url value='?action=${actRep}&command=${commNew}' />">新規日報の登録</a></p> --%>
+         <p><a href="<c:url value='?action=${actRep}&command=${commNew}' />">新規日報の登録</a></p>
+
      </c:param>
 </c:import>
